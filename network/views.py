@@ -69,8 +69,10 @@ def new_post(request):
         user = request.user
         content = request.POST['content']
 
-        p = Post(content=content)
+        p = Post(content=content, user = user)
         p.save()
-        p.owner.add(user)
 
     return HttpResponseRedirect(reverse("index"))
+
+def all(request):
+    posts = Post.objects.All()
