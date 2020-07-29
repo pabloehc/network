@@ -5,9 +5,10 @@
     {% if user.is_authenticated %}
     <div id="new-post" class="rounded post">
         <h5>New Post</h5>
-        <form id="new-post-form">
-            <textarea class="form-control" id="new-post-body" placeholder="What do you want to say?"></textarea>
-            <button id="post-button" class="btn btn-primary">Post</button>
+        <form action="{% url 'new_post' %}" id="new-post-form" method="post">
+            {% csrf_token %}
+            <textarea name='content' class="form-control" id="new-post-body" placeholder="What do you want to say?"></textarea>
+            <button id="post-button" name="new_post" class="btn btn-primary">Post</button>
         </form>
     </div>
     {% endif %}
