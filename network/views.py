@@ -9,8 +9,20 @@ from .models import User, Post
 
 
 def index(request):
-    return render(request, "network/index.html")
+    return render(request, "network/index.html", {
+        "filter": "all"
+    })
 
+def user_page(request, username):
+    user = User.objects.get(username=username)
+    followers = user.followers.count()
+    following = user.following.count()
+
+    return render(request, "network/user.html", {
+        "username": username, 
+        "followers": followers,
+        "following": following
+    })
 
 def login_view(request):
     if request.method == "POST":
@@ -74,7 +86,22 @@ def new_post(request):
 
     return HttpResponseRedirect(reverse("index"))
 
-def all(request):
-    posts = Post.objects.all()
+def posts(request, filter):
+    if filter == 'all':
+        try:
+            posts = Post.objects.all()
+        
+        except Post.DoesNotExist:
+            return JsonResponse({"error": "Posts not found."}, status=404)
+        
+    else:
+        try:
+            user = User.objects.get(username=filter)
+            posts = Post.objects.filter(user=user)
+        
+        except Post.DoesNotExist:
+            return JsonResponse({"error": "Posts not found."}, status=404)
+
     posts = posts.order_by("-timestamp").all()
+
     return JsonResponse([post.serialize() for post in posts], safe=False)

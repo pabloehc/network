@@ -1,0 +1,13 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <div id="user-page-data">
+        <h2 id="username">{{ username }}</h2>
+        <p>Following: {{following}}</p>
+        <p>Followers: {{followers}}</p>  
+    </div>
+
+    <div id="user-posts"></div>
+{% endblock %}

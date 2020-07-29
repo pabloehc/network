@@ -14,7 +14,11 @@
   padding: 0.25rem;
 }
 
-.username {
+i {
+  margin: 1%;
+}
+
+.post-username {
   font-weight: bold;
 }
 
@@ -29,5 +33,10 @@ nav {
 
 nav a {
   color: black;
+}
+
+#user-page-data * {
+  margin-left: 1%;
+  display: inline-block;
 }
 /*# sourceMappingURL=styles.css.map */

@@ -1,8 +1,11 @@
 {% extends "network/layout.html" %}
 
-{% block body %}
 
+{% block body %}
+    
+    
     {% if user.is_authenticated %}
+    
     <div id="new-post" class="rounded post">
         <h5>New Post</h5>
         <form action="{% url 'new_post' %}" id="new-post-form" method="post">
@@ -12,5 +15,7 @@
         </form>
     </div>
     {% endif %}
+    
+    <div id="all-posts"></div>
 
 {% endblock %}

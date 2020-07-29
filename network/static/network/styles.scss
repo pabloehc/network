@@ -14,7 +14,11 @@
     }
 }
 
-.username {
+i {
+    margin: 1%;
+}
+
+.post-username {
     font-weight: bold;
 }
 
@@ -31,3 +35,7 @@ nav {
     }
 }
 
+#user-page-data * {
+    margin-left: 1%;
+    display: inline-block;
+}
