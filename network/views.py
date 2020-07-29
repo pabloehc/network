@@ -32,12 +32,17 @@ def user_page(request, username):
         elif data["follow"] == 'false':
             currentUser.following.remove(user)
             currentUser.save()
+        
+        return render(request, "network/index.html", {
+        "filter": "all"
+        })
     
     return render(request, "network/user.html", {
         "username": username, 
         "followers": followers,
         "following": following
     })
+
 
 def login_view(request):
     if request.method == "POST":

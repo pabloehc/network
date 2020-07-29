@@ -5,11 +5,14 @@
 
     <div id="user-page-data">
         <h2 id="username">{{ username }}</h2>
-        <p>Following: {{following}}</p>
-        <p>Followers: {{followers}}</p>
-        <button id="follow" class="btn btn-primary">Follow</button>
-        <button id="unfollow" class="btn btn-primary">Unfollow</button>
+        <p id="following-number">Following: {{following}}</p>
+        <p id="followers-number">Followers: {{followers}}</p>
+        {% if user.is_authenticated %}
+            {% if user.username != username %}
+                <button id="follow" class="btn btn-primary">Follow</button>
+                <button id="unfollow" class="btn btn-primary">Unfollow</button>
+            {% endif %}
+        {% endif %}
     </div>
-
     <div id="user-posts"></div>
 {% endblock %}
