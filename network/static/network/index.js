@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     
     const username = document.querySelector("#username");
+    const followButton = document.querySelector('#follow');
+    const unfollowButton = document.querySelector('#unfollow');
+    if (followButton) {
+        followButton.addEventListener('click', () => follow(username.innerHTML, 'true'));
+    }
+    if (unfollowButton) {
+        unfollowButton.addEventListener('click', () => follow(username.innerHTML, 'false'));
+    }
+
     if (username) {
         load_posts(username.innerHTML)
 
@@ -51,4 +60,13 @@ function load_posts(filter) {
             }
         })
     })
+}
+
+function follow(username, change) {
+    fetch(`/user/${username}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            follow: `${change}`
+        })
+      })
 }

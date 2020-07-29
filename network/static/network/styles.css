@@ -5,13 +5,12 @@
   margin: 1%;
 }
 
-.post button {
-  margin: 1%;
-  background-color: teal;
-}
-
 .post div {
   padding: 0.25rem;
+}
+
+button {
+  margin: 1%;
 }
 
 i {

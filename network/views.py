@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 from .models import User, Post
 
@@ -13,11 +15,24 @@ def index(request):
         "filter": "all"
     })
 
+@csrf_exempt
 def user_page(request, username):
     user = User.objects.get(username=username)
     followers = user.followers.count()
     following = user.following.count()
 
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        currentUser = request.user
+
+        if data["follow"] == 'true':
+            currentUser.following.add(user)
+            currentUser.save()
+        
+        elif data["follow"] == 'false':
+            currentUser.following.remove(user)
+            currentUser.save()
+    
     return render(request, "network/user.html", {
         "username": username, 
         "followers": followers,
