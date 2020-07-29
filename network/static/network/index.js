@@ -10,15 +10,26 @@ function load_posts() {
     .then(posts => {
         
         posts.forEach(post => {
-            const user = post.user;
-            const content = post.content;
-            const timestamp = post.timestamp;
 
+            // Create elements
             const div = document.createElement('div');
-            div.className = 'post';
-            div.innerHTML = `<p>${user}</p>
-                            <p>${timestamp}</p>
-                            <p>${content}</p>`;
+            div.className = 'post rounded';
+            
+            const username = document.createElement('div');
+            username.innerHTML = post.user;
+            username.className = 'username';
+
+            const timestamp = document.createElement('div');
+            timestamp.innerHTML = post.timestamp;
+            timestamp.className = 'timestamp';
+
+            const content = document.createElement('div');
+            content.innerHTML = post.content;
+
+            div.append(username);
+            div.append(content);
+            div.append(timestamp);
+            
             document.querySelector('.body').append(div);
         })
     })
