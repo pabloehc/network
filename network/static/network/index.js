@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const username = document.querySelector("#username");
     const followButton = document.querySelector('#follow');
     const unfollowButton = document.querySelector('#unfollow');
+    const allPosts = document.querySelector('#all-posts');
+    const followingPosts = document.querySelector('#following-page');
+
     if (followButton) {
         followButton.addEventListener('click', () => follow(username.innerHTML, 'true'));
     }
@@ -12,9 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (username) {
         load_posts(username.innerHTML)
-
-    } else {
+    } else if (allPosts) {
         load_posts('all');
+    } else if (followingPosts) {
+        load_posts('current');
     }
 });
 
@@ -55,7 +59,7 @@ function load_posts(filter) {
             
             if (filter === "all") {
                 document.querySelector('#all-posts').append(div);
-            } else {
+            } else { 
                 document.querySelector('#user-posts').append(div);
             }
         })

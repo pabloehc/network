@@ -113,7 +113,25 @@ def posts(request, filter):
         
         except Post.DoesNotExist:
             return JsonResponse({"error": "Posts not found."}, status=404)
+
+    # Filter posts from people thet the current user follows
+    elif filter == 'current':
+        try:
+            currentUser = request.user
+
+            # Users that the current user follows
+            followingUsers = currentUser.following.all()
+
+            # Create query set to then add posts
+            posts = Post.objects.none()
+
+            # Add posts from people that the current user follows to the query set
+            for user in followingUsers:
+                posts |= Post.objects.filter(user=user)
         
+        except Post.DoesNotExist:
+            return JsonResponse({"error": "Posts not found."}, status=404) 
+
     else:
         try:
             user = User.objects.get(username=filter)
@@ -125,3 +143,7 @@ def posts(request, filter):
     posts = posts.order_by("-timestamp").all()
 
     return JsonResponse([post.serialize() for post in posts], safe=False)
+
+@login_required
+def following(request):
+    return render (request, "network/following.html")
