@@ -36,7 +36,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-
+function like (postId, element) {
+    fetch(`/${postId.toString()}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            like: 'true',
+        })
+      })
+    .then(response => response.json())
+    .then(post => {
+        element.innerHTML = ' ' + post.likes;
+    })
+}
 
 function load_posts(filter) {
 
@@ -84,6 +95,7 @@ function load_posts(filter) {
             const icon = document.createElement('i');
             icon.className = 'fa fa-heart-o';
             icon.innerHTML = ' ' + post.likes;
+            icon.addEventListener('click', () => like(post.id, icon));
 
             anchor.append(username);
             div.append(anchor);

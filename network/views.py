@@ -113,17 +113,32 @@ def posts(request, filter):
 
         try:
             post = Post.objects.get(pk=int(filter))
-        except Post.doesNotExists:
+        except Post.DoesNotExist:
             return JsonResponse({"error": "Post not found."})
 
-        if request.user == post.user:
-            if data.get("content") is not None:
+        if data.get("content") is not None:
+            if request.user == post.user:
                 post.content = data["content"]
-            post.save()
+                post.save()
 
-            return HttpResponse(status=204)
-        else:
-            return JsonResponse({"error": "Acces forbiden. Loggedin user differs from post owner"})
+                return HttpResponse(status=204)
+            
+            else:
+                return JsonResponse({"error": "Acces forbiden. Loggedin user differs from post owner"})
+        
+        if data.get('like') is not None:
+            liked_by = post.liked_by.all()
+
+            if request.user in liked_by:
+                post.liked_by.remove(request.user)
+                post.save()
+            else:
+                post.liked_by.add(request.user)
+                post.save()
+
+            return JsonResponse(post.serialize(), safe=False)
+
+
 
     if filter == 'all':
         try:
