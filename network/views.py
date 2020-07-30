@@ -33,9 +33,7 @@ def user_page(request, username):
             currentUser.following.remove(user)
             currentUser.save()
         
-        return render(request, "network/index.html", {
-        "filter": "all"
-        })
+        return JsonResponse({"followers": user.followers.count()}, safe=False)
     
     return render(request, "network/user.html", {
         "username": username, 

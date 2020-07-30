@@ -148,6 +148,11 @@ function follow(username, change) {
             follow: `${change}`
         })
       })
+    .then(response => response.json())
+    .then(info => {
+        document.querySelector('#foll-numb').innerHTML = info.followers;
+
+    })
 }
 
 function pagination(appendHere, action) {

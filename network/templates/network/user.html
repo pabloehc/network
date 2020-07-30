@@ -6,7 +6,7 @@
     <div id="user-page-data">
         <h2 id="username">{{ username }}</h2>
         <p id="following-number">Following: {{following}}</p>
-        <p id="followers-number">Followers: {{followers}}</p>
+        <p id="followers-number">Followers: <div id="foll-numb">{{followers}}</div></p>
         {% if user.is_authenticated %}
             {% if user.username != username %}
                 <button id="follow" class="btn btn-primary">Follow</button>
