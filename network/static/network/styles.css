@@ -26,11 +26,11 @@ i {
   font-weight: lighter;
 }
 
-nav {
+.navbar {
   background-color: teal;
 }
 
-nav a {
+.navbar a {
   color: black;
 }
 
