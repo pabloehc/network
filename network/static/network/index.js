@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+
+
 function load_posts(filter) {
 
     fetch(`/${filter}`)
@@ -62,6 +64,23 @@ function load_posts(filter) {
             const content = document.createElement('div');
             content.innerHTML = post.content;
 
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = content.innerHTML;
+            textarea.style.display = 'none';
+
+            if (post.user == document.querySelector('#logged-user strong').innerHTML) {
+                const editButton = document.createElement('button');
+                editButton.innerHTML = 'Edit';
+                editButton.className = 'btn btn-primary';
+                const saveButton = document.createElement('button');
+                saveButton.innerHTML = 'Save';
+                saveButton.className = 'btn btn-primary';
+                saveButton.style.display = 'none';
+                editButton.addEventListener('click', () => edit(content, textarea, editButton, saveButton));
+                div.append(editButton);
+                div.append(saveButton);
+            }
+
             const icon = document.createElement('i');
             icon.className = 'fa fa-heart-o';
             icon.innerHTML = ' ' + post.likes;
@@ -69,6 +88,7 @@ function load_posts(filter) {
             anchor.append(username);
             div.append(anchor);
             div.append(content);
+            div.append(textarea);
             div.append(icon);
             div.append(timestamp);
             
@@ -83,6 +103,28 @@ function load_posts(filter) {
             //document.querySelector('#user-posts').append(div);
         }  
     })
+}
+
+function edit(element, textarea, editButton, saveButton) {
+    element.style.display = 'none';
+    textarea.style.display = 'block';
+    editButton.style.display = 'none';
+    saveButton.style.display = 'block';
+
+
+    saveButton.addEventListener('click', () => {
+        
+        element.innerHTML = textarea.value;
+        element.style.display = 'block';
+        textarea.style.display = 'none';
+        editButton.style.display = 'block';
+        saveButton.style.display = 'none';
+
+        // update post in model
+
+    })
+    
+
 }
 
 function follow(username, change) {
@@ -125,5 +167,4 @@ function pagination(appendHere, action) {
         showPosts[i].style.display = 'block';
         document.querySelector(appendHere).append(showPosts[i]);
     }
-
 }
