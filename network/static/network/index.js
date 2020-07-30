@@ -76,7 +76,7 @@ function load_posts(filter) {
                 saveButton.innerHTML = 'Save';
                 saveButton.className = 'btn btn-primary';
                 saveButton.style.display = 'none';
-                editButton.addEventListener('click', () => edit(content, textarea, editButton, saveButton));
+                editButton.addEventListener('click', () => edit(content, textarea, editButton, saveButton, post.id));
                 div.append(editButton);
                 div.append(saveButton);
             }
@@ -105,12 +105,13 @@ function load_posts(filter) {
     })
 }
 
-function edit(element, textarea, editButton, saveButton) {
+function edit(element, textarea, editButton, saveButton, postId) {
     element.style.display = 'none';
     textarea.style.display = 'block';
     editButton.style.display = 'none';
     saveButton.style.display = 'block';
 
+    console.log(postId)
 
     saveButton.addEventListener('click', () => {
         
@@ -121,7 +122,8 @@ function edit(element, textarea, editButton, saveButton) {
         saveButton.style.display = 'none';
 
         // update post in model
-
+        // create API??????? PROBABLY 
+        // update post with given ID
     })
     
 
