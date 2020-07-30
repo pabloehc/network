@@ -97,10 +97,8 @@ function load_posts(filter) {
 
         if (filter === "all") {
             pagination('#all-posts', 'none');
-            //document.querySelector('#all-posts').append(div);
         } else { 
             pagination('#user-posts', 'none');
-            //document.querySelector('#user-posts').append(div);
         }  
     })
 }
@@ -111,22 +109,24 @@ function edit(element, textarea, editButton, saveButton, postId) {
     editButton.style.display = 'none';
     saveButton.style.display = 'block';
 
-    console.log(postId)
-
     saveButton.addEventListener('click', () => {
-        
-        element.innerHTML = textarea.value;
+
+        const content = textarea.value;
+        element.innerHTML = content;
+
+        fetch(`${postId.toString()}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                content: `${content}`
+            })
+        })
+
         element.style.display = 'block';
         textarea.style.display = 'none';
         editButton.style.display = 'block';
         saveButton.style.display = 'none';
 
-        // update post in model
-        // create API??????? PROBABLY 
-        // update post with given ID
     })
-    
-
 }
 
 function follow(username, change) {

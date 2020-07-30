@@ -106,7 +106,25 @@ def new_post(request):
 
     return HttpResponseRedirect(reverse("index"))
 
+@csrf_exempt
 def posts(request, filter):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+
+        try:
+            post = Post.objects.get(pk=int(filter))
+        except Post.doesNotExists:
+            return JsonResponse({"error": "Post not found."})
+
+        if request.user == post.user:
+            if data.get("content") is not None:
+                post.content = data["content"]
+            post.save()
+
+            return HttpResponse(status=204)
+        else:
+            return JsonResponse({"error": "Acces forbiden. Loggedin user differs from post owner"})
+
     if filter == 'all':
         try:
             posts = Post.objects.all()
